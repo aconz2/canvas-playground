@@ -1,0 +1,26 @@
+{
+  "name": "canvas-playground",
+  "repo": "aconz2/canvas-playground",
+  "description": "",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "component/each": "*",
+    "aconz2/form-value": "*",
+    "aconz2/attr": "*",
+    "component/query": "*",
+    "aconz2/input-link": "*",
+    "component/event": "*",
+    "component/delegate": "*",
+    "component/querystring": "*",
+    "visionmedia/page.js": "*"
+  },
+  "development": {},
+  "scripts": [
+    "index.js",
+    "form.js",
+    "pinwheel.js",
+    "graph.js"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,32 @@
+<html>
+<head>
+  <title>Canvas Playground</title>
+</head>
+<body>
+  <style>
+    label > span {
+      display: inline-block;
+      margin: 0 10px;
+      min-width: 50px;
+    }
+    nav li{
+      float: left;
+    }
+    .cf:before,
+    .cf:after {
+        content: " ";
+        display: table;
+    }
+
+    .cf:after {
+        clear: both;
+    }
+  </style>
+  <header><nav class='cf'></nav></header>
+  <canvas></canvas>
+  <form></form>
+  <pre></pre>
+  <script src='/build/build.js'></script>
+  <script>require('canvas-playground');</script>
+</body>
+</html>
