@@ -1,5 +1,5 @@
 var tau = Math.PI * 2;
-var r = 2;
+var r = 1;
 
 exports.config = {
   numPoints: [10, 1000, 10, 500],
