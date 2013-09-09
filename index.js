@@ -8,8 +8,11 @@ var page = require('page');
 var create = document.createElement.bind(document);
 
 var body = document.body;
+var nav = query('nav');
+var canvas = query('canvas');
+canvas.width = canvas.height = Math.min(document.width, document.height) / 2;
+var ctx = canvas.getContext('2d');
 var cur = {
-  canvas: query('canvas'),
   form: query('form'),
   pre: query('pre')
 };
@@ -19,6 +22,15 @@ var drawings = {
   pinwheel: require('./pinwheel'),
   graph: require('./graph')
 };
+
+each(drawings, function(name) {
+  var li = create('li');
+  var a = create('a');
+  a.setAttribute('href', '/?name=' + name);
+  a.textContent = name;
+  li.appendChild(a);
+  nav.appendChild(li);
+});
 
 page('*', function(ctx) {
   var q = querystring.parse(ctx.querystring);
@@ -40,9 +52,6 @@ function selectDrawing(key) {
   conf.legend = key;
   var form = createForm(conf);
 
-  var canvas = create('canvas');
-  var ctx = canvas.getContext('2d');
-  canvas.width = canvas.height = 500;
   var drawFn = drawing.draw(canvas);
   var l1 = Object.keys(drawing.config).length;
   var l2 = drawFn.length;
@@ -51,14 +60,14 @@ function selectDrawing(key) {
   }
 
   var pre = create('pre');
-  pre.textContent = drawing.draw.toString();
-
+  pre.textContent = [
+    drawing.config.toString(),
+    drawing.draw.toString()
+  ].join('\n');
   body.replaceChild(form, cur.form);
-  body.replaceChild(canvas, cur.canvas);
   body.replaceChild(pre, cur.pre);
 
   cur.form = form;
-  cur.canvas = canvas;
   cur.pre = pre;
 
   var formValues = fValue(form);
