@@ -20,7 +20,8 @@ var cur = {
 // drawings
 var drawings = {
   pinwheel: require('./pinwheel'),
-  graph: require('./graph')
+  graph: require('./graph'),
+  blob: require('./blob')
 };
 
 each(drawings, function(name) {
@@ -41,10 +42,6 @@ page('*', function(ctx) {
   }
 });
 page.start();
-
-// if(window.location.search === '/') {
-//   page('/?name=pinwheel');
-// }
 
 function selectDrawing(key) {
   var drawing = drawings[key];

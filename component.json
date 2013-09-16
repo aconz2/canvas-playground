@@ -20,6 +20,7 @@
     "index.js",
     "form.js",
     "pinwheel.js",
+    "blob.js",
     "graph.js"
   ],
   "license": "MIT"
