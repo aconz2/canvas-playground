@@ -13,7 +13,8 @@
     "component/event": "*",
     "component/delegate": "*",
     "component/querystring": "*",
-    "visionmedia/page.js": "*"
+    "visionmedia/page.js": "*",
+    "component/emitter": "*"
   },
   "development": {},
   "scripts": [
@@ -21,7 +22,8 @@
     "form.js",
     "pinwheel.js",
     "blob.js",
-    "graph.js"
+    "graph.js",
+    "tracking.js"
   ],
   "license": "MIT"
 }

@@ -5,7 +5,10 @@ var delegate = require('delegate');
 var fValue = require('form-value');
 var querystring = require('querystring');
 var page = require('page');
+var emitter = require('emitter');
 var create = document.createElement.bind(document);
+
+var events = new emitter({});
 
 var body = document.body;
 var nav = query('nav');
@@ -21,7 +24,8 @@ var cur = {
 var drawings = {
   pinwheel: require('./pinwheel'),
   graph: require('./graph'),
-  blob: require('./blob')
+  blob: require('./blob'),
+  tracking: require('./tracking')
 };
 
 each(drawings, function(name) {
@@ -49,7 +53,7 @@ function selectDrawing(key) {
   conf.legend = key;
   var form = createForm(conf);
 
-  var drawFn = drawing.draw(canvas);
+  var drawFn = drawing.draw(canvas, events);
   var l1 = Object.keys(drawing.config).length;
   var l2 = drawFn.length;
   if(l1 !== l2) {
@@ -58,7 +62,7 @@ function selectDrawing(key) {
 
   var pre = create('pre');
   pre.textContent = [
-    drawing.config.toString(),
+    JSON.stringify(drawing.config, null, 2),
     drawing.draw.toString()
   ].join('\n');
   body.replaceChild(form, cur.form);
@@ -70,10 +74,14 @@ function selectDrawing(key) {
   var formValues = fValue(form);
 
   var onchange = function() {
+    events.emit('stop');
     var vals = formValues();
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0,0, canvas.width, canvas.height);
     drawFn.apply(null, values(vals));
+    window.setTimeout(function() {
+      events.emit('start');
+    }, 1000);
     // window.location.search = querystring.stringify(vals);
   };
   delegate.bind(form, 'input', 'change', onchange);
@@ -100,7 +108,7 @@ function toFormConfig(config) {
 function values(obj) {
   var arr = [];
   each(obj, function(k, v) {
-    arr.push(v);
+    arr.push(parseInt(v, 10));
   });
   return arr;
 }
